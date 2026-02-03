@@ -48,7 +48,7 @@ public class StudentService {
 
     public StudentResponseDTO updateStudent(String id, StudentRequestDTO dto) {
         StudentModel existing = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Student not found"));
+                .orElseThrow(() -> new StudentNotFoundException("Student not found"));
 
         existing.setName(dto.getName());
         existing.setAge(dto.getAge());

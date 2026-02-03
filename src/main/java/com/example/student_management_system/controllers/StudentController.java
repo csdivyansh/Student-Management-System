@@ -1,38 +1,40 @@
 package com.example.student_management_system.controllers;
 
-import com.example.student_management_system.models.StudentModel;
+import com.example.student_management_system.DTO.StudentRequestDTO;
+import com.example.student_management_system.DTO.StudentResponseDTO;
 import com.example.student_management_system.services.StudentService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@RequestMapping("/students")
 public class StudentController {
+
     private final StudentService service;
 
-    public StudentController(StudentService studentService) {
-        this.service = studentService;
+    public StudentController(StudentService service) {
+        this.service = service;
     }
 
-    @PostMapping("/add")
-    public StudentModel addStudent(@RequestBody StudentModel student) {
-        return service.addStudent(student);
+    @PostMapping
+    public StudentResponseDTO addStudent(@RequestBody StudentRequestDTO dto) {
+        return service.addStudent(dto);
     }
 
-    @GetMapping("/students")
-    public List<StudentModel> getStudents() {
+    @GetMapping
+    public List<StudentResponseDTO> getStudents() {
         return service.getStudents();
     }
 
-    @PutMapping("/update/{id}")
-    public StudentModel updateStudent(@PathVariable String id, @RequestBody StudentModel student) {
-        return service.updateStudent(id, student);
+    @PutMapping("/{id}")
+    public StudentResponseDTO updateStudent(@PathVariable String id, @RequestBody StudentRequestDTO dto) {
+        return service.updateStudent(id, dto);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public String deleteStudent(@PathVariable String id) {
         service.deleteStudent(id);
         return "Deleted";
     }
-
 }
